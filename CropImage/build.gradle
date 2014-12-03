@@ -1,0 +1,48 @@
+apply plugin: 'com.android.library'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.12.+'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+    }
+}
+
+//
+// Publishing
+//
+
+configurations {
+    archives {
+        extendsFrom configurations.default
+    }
+}
+
+repositories {
+    flatDir {
+        name "fileRepo"
+        dirs "../repo"
+    }
+}
+
+uploadArchives {
+    repositories {
+        add project.repositories.fileRepo
+    }
+}
